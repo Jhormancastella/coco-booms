@@ -567,6 +567,28 @@ canvas, .game-wrapper {
   font-size: clamp(var(--font-size-7xl), 6vw, 3rem);
   text-shadow: 3px 3px 0 var(--color-bg-secondary);
   margin-bottom: var(--spacing-3xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+}
+
+.menu-title img {
+  height: 4rem;
+  vertical-align: middle;
+}
+
+@media (max-width: 768px) and (orientation: portrait) {
+  .menu-title {
+    font-size: var(--font-size-6xl);
+    margin-bottom: var(--spacing-lg);
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .menu-title img {
+    height: 3rem;
+  }
 }
 
 .menu-subtitle {

@@ -83,7 +83,7 @@ function makeBtn(text, onClick, type) {
 function renderMain(p) {
     const t = document.createElement('h1');
     t.className = 'menu-title';
-    t.textContent = 'Coco-booms';
+    t.innerHTML = '<img src="https://mcgarlet.it/wp-content/uploads/2024/09/mcgarlet-frutta-i-magnifici-10-cocco-1.webp" alt="Coco-booms" style="height: 4rem; vertical-align: middle; margin-right: 0.5rem;">Coco-booms';
     p.appendChild(t);
     p.appendChild(makeBtn('Jugar', () => nav('start'), 'success'));
     p.appendChild(makeBtn('Controles', () => nav('controls')));
