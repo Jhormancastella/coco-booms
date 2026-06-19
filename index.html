@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Coco-booms</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <!-- Intro video (se muestra antes del menú) -->
+    <div id="intro-screen">
+        <video id="intro-video" playsinline muted preload="auto"
+               poster=""
+               src="https://res.cloudinary.com/dipv76dpn/video/upload/v1776640929/VID_20260415_084919_181_bsl_2_wawtkk.mp4">
+        </video>
+        <button id="intro-skip" aria-label="Saltar intro">Saltar ▶</button>
+    </div>
+
+    <!-- Pantalla de orientación (solo móviles en portrait) -->
+    <div id="rotate-screen" aria-hidden="true">
+        <div class="rotate-content">
+            <div class="rotate-icon">📱</div>
+            <p>Gira tu dispositivo</p>
+            <small>Para mejor experiencia usa modo horizontal</small>
+            <button id="rotate-skip-btn">Continuar de todos modos</button>
+        </div>
+    </div>
+
+    <div class="game-wrapper">
+        <div class="hud">
+            <div class="hud-left">
+                <span>&#127796; <span id="waveDisplay">Oleada 1</span></span>
+                <span><span class="coco-icon green"></span> <span id="greenCount">3</span></span>
+                <span><span class="coco-icon brown"></span> <span id="brownCount">2</span></span>
+            </div>
+            <div class="hud-right">
+                <span class="estado-oleada" id="statusDisplay">Dispara</span>
+                <button class="btn-fullscreen" id="fullscreenBtn" aria-label="Pantalla completa / rotar">🔄</button>
+            </div>
+            <div class="hud-actions">
+                <button class="btn-apoyo" id="supportBtn">Ayudante (<span id="supportCounter">3</span>)</button>
+                <button class="btn-explosive" id="explosiveBtn">Boom (<span id="explosiveCounter">0</span>)</button>
+                <button class="btn-pausa" id="pauseBtn" aria-label="Pausa">⏸</button>
+                <button class="btn-reinicio" id="resetBtn" aria-label="Reiniciar">↺</button>
+            </div>
+        </div>
+        <div class="canvas-container">
+            <canvas id="gameCanvas" width="900" height="550" role="img" aria-label="Juego Coco-booms - Usa mouse o touch para apuntar y lanzar"></canvas>
+        </div>
+    </div>
+    <div id="menu-container"></div>
+    <script type="module" src="src/main.js"></script>
+    <!-- Script para activar audio en el primer clic del usuario -->
+    <script>
+        let hasActivatedAudio = false;
+        
+        // Función para activar audio y marcar como activado
+        function activateAudioOnUserInteraction() {
+            if (hasActivatedAudio) return;
+            
+            console.log('👆 Primer clic del usuario: activando audio...');
+            hasActivatedAudio = true;
+            
+            // Guardamos la variable en el window para que el juego la use
+            window.userHasInteracted = true;
+            
+            // Eliminamos los eventos después de activar
+            document.removeEventListener('click', activateAudioOnUserInteraction);
+            document.removeEventListener('touchstart', activateAudioOnUserInteraction);
+        }
+        
+        // Agregamos eventos para cualquier clic o toque
+        document.addEventListener('click', activateAudioOnUserInteraction, { once: false });
+        document.addEventListener('touchstart', activateAudioOnUserInteraction, { once: false, passive: false });
+        
+        // Función para ocultar el video manualmente
+        function hideIntro() {
+            const introScreen = document.getElementById('intro-screen');
+            if (introScreen) {
+                introScreen.style.display = 'none';
+                console.log('Intro oculto manualmente');
+            }
+        }
+        
+        // Ocultar el video si el usuario presiona cualquier tecla
+        document.addEventListener('keydown', hideIntro);
+    </script>
+</body>
+</html>
