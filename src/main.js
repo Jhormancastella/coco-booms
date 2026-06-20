@@ -1,5 +1,6 @@
 import { game, camera } from './core.js';
-import { startWave, activateSupport } from './gameLogic.js';
+import { startWave, activateSupport, activateExplosive } from './gameLogic.js';
+import { EXPLOSIVE_COOLDOWN_WAVES } from './core.js';
 import { updatePhysics } from './physics.js';
 import { draw } from './renderer.js';
 import { handlePointerDown, handlePointerMove, handlePointerUp, handlePointerCancel } from './input.js';
@@ -105,7 +106,7 @@ function resetGame() {
     game.gameStarted     = true;
     game.state           = 'aiming';
     game.usingExplosive = false;
-    game.explosiveCoconut = { available: false, cooldown: 0 };
+    game.explosiveCoconut = { available: false, cooldown: EXPLOSIVE_COOLDOWN_WAVES };
     game.projectiles = [];
     game.particles = [];
     game.enemies = [];
@@ -133,7 +134,7 @@ function loadLevel(level) {
     game.gameStarted     = true;
     game.state           = 'aiming';
     game.usingExplosive = false;
-    game.explosiveCoconut = { available: false, cooldown: 0 };
+    game.explosiveCoconut = { available: false, cooldown: EXPLOSIVE_COOLDOWN_WAVES };
     game.projectiles = [];
     game.particles = [];
     game.enemies = [];
@@ -232,8 +233,9 @@ function setupButton(btn, callback) {
     });
 }
 
-if (dom.supportBtn)   setupButton(dom.supportBtn, activateSupport);
-if (dom.resetBtn)     setupButton(dom.resetBtn, resetGame);
+if (dom.supportBtn)     setupButton(dom.supportBtn, activateSupport);
+if (dom.explosiveBtn)   setupButton(dom.explosiveBtn, activateExplosive);
+if (dom.resetBtn)       setupButton(dom.resetBtn, resetGame);
 
 const pauseBtn = document.getElementById('pauseBtn');
 

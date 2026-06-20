@@ -53,9 +53,6 @@ function handlePointerDown(e) {
         game.dragStart = { x: pos.x, y: pos.y };
         game.dragCurrent = { x: pos.x, y: pos.y };
         game.lastTouchPos = { x: pos.x, y: pos.y };
-        if (game.explosiveCoconut.available) {
-            game.usingExplosive = true;
-        }
     }
 }
 

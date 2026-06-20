@@ -8,6 +8,7 @@ export const GRAVITY = 0.35;
 export const MAX_PULL_DISTANCE = 140;
 export const MAX_LAUNCH_SPEED = 34;
 export const MIN_LAUNCH_SPEED = 8;
+export const EXPLOSIVE_COOLDOWN_WAVES = 2;
 
 export const camera = { x: 0, y: 0, targetX: 0, speed: 0.12 };
 
@@ -38,7 +39,7 @@ export const game = {
     gameStarted: false,
     gameOver: false,
     paused: false,
-    explosiveCoconut: { available: false, cooldown: 0 },
+    explosiveCoconut: { available: false, cooldown: EXPLOSIVE_COOLDOWN_WAVES },
 };
 
 let _canvas = null;

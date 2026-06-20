@@ -1,4 +1,4 @@
-import { game, GROUND_Y, MIN_LAUNCH_SPEED, MAX_LAUNCH_SPEED } from './core.js';
+import { game, GROUND_Y, MIN_LAUNCH_SPEED, MAX_LAUNCH_SPEED, EXPLOSIVE_COOLDOWN_WAVES } from './core.js';
 import { spawnParticle } from './utils.js';
 import { Enemy, Block } from './classes.js';
 import { playSound, enableAudio } from './audio.js';
@@ -188,12 +188,28 @@ export function launchCoconut(power, angle) {
     return true;
 }
 
+export function activateExplosive() {
+    var dom = getDom();
+    if (game.state !== 'aiming') return;
+
+    if (!game.explosiveCoconut.available) {
+        dom.statusDisplay.textContent = 'Boom en ' + game.explosiveCoconut.cooldown + ' oleada(s)';
+        return;
+    }
+
+    game.usingExplosive = !game.usingExplosive;
+    dom.statusDisplay.textContent = game.usingExplosive
+        ? 'Boom activo - apunta!'
+        : 'Apunta de nuevo';
+}
+
 export function launchExplosiveCoconut(power, angle) {
     if (!game.explosiveCoconut.available) return false;
 
     var dom = getDom();
     game.explosiveCoconut.available = false;
-    game.explosiveCoconut.cooldown = 5;
+    game.explosiveCoconut.cooldown = EXPLOSIVE_COOLDOWN_WAVES;
+    game.usingExplosive = false;
 
     var speed = (MIN_LAUNCH_SPEED + power * (MAX_LAUNCH_SPEED - MIN_LAUNCH_SPEED)) * 1.4;
     var launchY = GROUND_Y - 60;
